@@ -1,0 +1,614 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#12314e">
+  <meta name="description" content="کدنوا؛ نمونه‌ای آفلاین برای معرفی دوره‌های برنامه‌نویسی و درخواست مشاوره آموزشی.">
+  <title>کدنوا | آموزش کاربردی برنامه‌نویسی</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f5f8fc;
+      --surface: #ffffff;
+      --ink: #12314e;
+      --muted: #526b7d;
+      --primary: #126b92;
+      --primary-dark: #0d4f70;
+      --mint: #18a49c;
+      --mint-dark: #117a75;
+      --line: #d9e7ef;
+      --soft-blue: #e9f5fb;
+      --soft-mint: #e8f7f4;
+      --warning-bg: #fff9e9;
+      --warning-line: #ead8a5;
+      --radius-lg: 24px;
+      --radius-md: 16px;
+      --shadow: 0 16px 42px rgba(18, 49, 78, 0.08);
+      --focus: 0 0 0 3px rgba(24, 164, 156, 0.28);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 24px; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "IRANYekan", "IRANYekan Web", "IRANYekanWeb", Tahoma, Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.85;
+      overflow-wrap: anywhere;
+    }
+    a { color: inherit; text-decoration: none; }
+    button, input, select, textarea { font: inherit; }
+    button, a, input, select, textarea { -webkit-tap-highlight-color: transparent; }
+    button { color: inherit; }
+    a:focus-visible, button:focus-visible, input:focus-visible,
+    select:focus-visible, textarea:focus-visible, summary:focus-visible {
+      outline: 3px solid var(--mint);
+      outline-offset: 3px;
+    }
+    .wrap { width: min(1100px, calc(100% - 32px)); margin-inline: auto; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+    .skip-link {
+      position: absolute; inset-block-start: 8px; inset-inline-start: 8px;
+      z-index: 20; padding: 8px 12px; border-radius: 8px;
+      background: var(--ink); color: #fff; transform: translateY(-160%);
+    }
+    .skip-link:focus { transform: translateY(0); }
+
+    .site-header {
+      position: relative; z-index: 5; background: rgba(255,255,255,.96);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav { padding-block: 14px; }
+    .nav-layout {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      gap: 24px; min-width: 0;
+    }
+    .brand-stack {
+      display: flex; flex: 1 1 auto; flex-direction: column; align-items: flex-start;
+      min-width: 0; gap: 8px;
+    }
+    .logo { display: inline-flex; align-items: center; gap: 9px; font-weight: 900; font-size: 1.35rem; color: var(--primary); white-space: nowrap; }
+    .logo-mark {
+      display: grid; place-items: center; flex: 0 0 34px; width: 34px; height: 34px;
+      border-radius: 11px; color: #fff; background: linear-gradient(135deg, var(--primary), var(--mint));
+      box-shadow: 0 5px 14px rgba(18,107,146,.2);
+    }
+    .logo-mark-symbol { display: block; line-height: 1; transform: translateY(-1px); }
+    .nav-links {
+      display: flex; align-items: center; justify-content: flex-start; gap: 8px 20px;
+      flex-wrap: wrap; width: 100%; font-size: .91rem;
+    }
+    .nav-links a { color: #38556a; transition: color .18s ease; white-space: nowrap; }
+    .nav-links a:hover { color: var(--mint-dark); }
+    .header-search { position: relative; flex: 0 1 290px; width: min(290px, 100%); min-width: 0; margin-top: 1px; }
+    .header-search-icon {
+      position: absolute; inset-inline-start: 13px; top: 50%; width: 18px; height: 18px;
+      color: #718897; transform: translateY(-50%); pointer-events: none;
+    }
+    .header-search-input {
+      display: block; width: 100%; min-width: 0; min-height: 44px;
+      padding: 9px 13px; padding-inline-start: 40px; border: 1px solid #cddfe9;
+      border-radius: 12px; color: var(--ink); background: #fff;
+      transition: border-color .18s ease, box-shadow .18s ease;
+    }
+    .header-search-input::placeholder { color: #8193a0; }
+    .header-search-input:focus { border-color: var(--mint); box-shadow: var(--focus); outline: none; }
+
+    .hero {
+      position: relative; overflow: hidden; padding: clamp(44px, 7vw, 82px) 0;
+      background: radial-gradient(circle at 9% 16%, rgba(24,164,156,.17), transparent 28%),
+                  radial-gradient(circle at 92% 78%, rgba(18,107,146,.12), transparent 28%),
+                  linear-gradient(135deg, #e9f5ff 0%, #f9fdfe 68%, #eefaf8 100%);
+    }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(280px, .85fr); gap: clamp(24px, 5vw, 56px); align-items: center; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px; padding: 5px 12px;
+      color: var(--primary-dark); background: rgba(255,255,255,.8);
+      border: 1px solid rgba(18,107,146,.14); border-radius: 999px;
+      font-size: .86rem; font-weight: 700;
+    }
+    .eyebrow::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--mint); }
+    h1 { margin: 17px 0 14px; font-size: clamp(1.9rem, 4.5vw, 3.25rem); line-height: 1.45; letter-spacing: -.035em; }
+    .hero-copy { max-width: 630px; margin: 0; color: #496174; font-size: clamp(1rem, 1.7vw, 1.12rem); }
+    .actions { display: flex; gap: 11px; flex-wrap: wrap; margin-top: 25px; }
+    .btn {
+      min-height: 46px; display: inline-flex; align-items: center; justify-content: center;
+      gap: 8px; padding: 10px 18px; border: 1px solid transparent;
+      border-radius: 12px; color: #fff; background: var(--primary);
+      font-weight: 800; cursor: pointer; transition: background .18s ease, transform .18s ease, box-shadow .18s ease;
+    }
+    .btn:hover { background: var(--primary-dark); box-shadow: 0 7px 18px rgba(18,107,146,.17); transform: translateY(-1px); }
+    .btn-secondary { color: var(--primary); background: rgba(255,255,255,.88); border-color: var(--line); }
+    .btn-secondary:hover { color: var(--primary-dark); background: #fff; }
+    .hero-panel {
+      background: rgba(255,255,255,.88); border: 1px solid rgba(217,231,239,.9);
+      border-radius: var(--radius-lg); padding: clamp(20px, 3.4vw, 30px);
+      box-shadow: var(--shadow);
+    }
+    .hero-panel h2 { margin: 0 0 5px; font-size: 1.22rem; }
+    .panel-intro { margin: 0 0 19px; color: var(--muted); font-size: .91rem; }
+    .path-step { display: flex; align-items: flex-start; gap: 12px; padding: 12px; margin-top: 10px; border-radius: 13px; background: var(--soft-mint); }
+    .step-number { flex: 0 0 30px; height: 30px; display: grid; place-items: center; border-radius: 10px; background: #fff; color: var(--mint-dark); font-weight: 900; }
+    .path-step strong { display: block; font-size: .95rem; }
+    .path-step span:last-child { display: block; color: #456c70; font-size: .84rem; }
+    .sample-note { margin: 17px 0 0; color: #667b8a; font-size: .8rem; }
+
+    section { padding-block: clamp(42px, 6vw, 66px); }
+    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 18px; margin-bottom: 23px; }
+    .section-kicker { margin: 0 0 4px; color: var(--mint-dark); font-weight: 800; font-size: .88rem; }
+    h2 { margin: 0; font-size: clamp(1.45rem, 3vw, 1.95rem); line-height: 1.5; }
+    .section-desc { max-width: 650px; margin: 8px 0 0; color: var(--muted); }
+
+    .course-tools { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 16px; margin: 23px 0 20px; }
+    .search-wrap { position: relative; }
+    .search-wrap label { display: block; margin-bottom: 6px; font-weight: 800; font-size: .9rem; }
+    .search-input { width: 100%; min-height: 48px; padding: 10px 14px; border: 1px solid #cddfe9; border-radius: 12px; color: var(--ink); background: #fff; }
+    .search-input::placeholder { color: #8193a0; }
+    .filter-area { min-width: 0; }
+    .filter-label { display: block; margin-bottom: 6px; font-weight: 800; font-size: .9rem; }
+    .filter-buttons { display: flex; gap: 7px; flex-wrap: wrap; }
+    .filter-btn { min-height: 39px; padding: 6px 12px; border: 1px solid var(--line); border-radius: 999px; background: #fff; color: #38556a; cursor: pointer; font-size: .86rem; transition: .18s ease; }
+    .filter-btn:hover { border-color: #9dcfc9; color: var(--mint-dark); }
+    .filter-btn[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: #fff; }
+    .result-count { min-height: 28px; margin: 0 0 13px; color: var(--muted); font-size: .88rem; }
+    .course-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 17px; }
+    .course-card { min-width: 0; display: flex; flex-direction: column; gap: 12px; padding: 22px; border: 1px solid var(--line); border-radius: var(--radius-md); background: var(--surface); box-shadow: 0 7px 22px rgba(18,49,78,.035); transition: border-color .2s ease, transform .2s ease, box-shadow .2s ease; }
+    .course-card:hover { transform: translateY(-3px); border-color: #b5dcd7; box-shadow: var(--shadow); }
+    .course-card[hidden] { display: none !important; }
+    .course-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .course-symbol { display: grid; place-items: center; flex: 0 0 48px; width: 48px; height: 48px; border-radius: 14px; color: var(--primary); background: var(--soft-blue); font-weight: 900; direction: ltr; font-size: .98rem; }
+    .course-card:nth-child(2) .course-symbol { color: var(--mint-dark); background: var(--soft-mint); }
+    .course-card:nth-child(3) .course-symbol { color: #76559c; background: #f3edfb; }
+    .category-tag { display: inline-flex; align-items: center; padding: 4px 9px; border-radius: 999px; color: #486477; background: #f1f5f8; font-size: .77rem; font-weight: 700; }
+    .course-card h3 { margin: 0; font-size: 1.15rem; line-height: 1.6; }
+    .course-card p { margin: 0; color: var(--muted); font-size: .92rem; }
+    .course-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: auto; padding-top: 5px; }
+    .duration { color: var(--primary-dark); background: #edf6fb; border-radius: 8px; padding: 4px 9px; font-size: .82rem; font-weight: 800; }
+    .sample-duration { color: #6b7280; font-size: .77rem; }
+    .empty-state { margin-top: 12px; padding: 24px 16px; border: 1px dashed #bfd3df; border-radius: 14px; text-align: center; background: rgba(255,255,255,.7); color: var(--muted); }
+    .empty-state[hidden] { display: none !important; }
+    .legacy-service {
+      display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center;
+      gap: 18px; margin-top: 25px; padding: 20px 22px;
+      border: 1px solid var(--line); border-radius: var(--radius-md); background: var(--soft-mint);
+    }
+    .legacy-service h3 { margin: 0 0 5px; font-size: 1.08rem; }
+    .legacy-service p { margin: 0; color: var(--muted); font-size: .92rem; }
+    .legacy-service .btn { white-space: nowrap; }
+
+    .about-section { background: #eaf4f8; }
+    .about-card { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 19px; align-items: start; padding: clamp(20px, 4vw, 32px); border: 1px solid #d7e8ee; border-radius: var(--radius-lg); background: rgba(255,255,255,.75); }
+    .about-symbol { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 16px; color: #fff; background: linear-gradient(135deg, var(--primary), var(--mint)); font-size: 1.3rem; font-weight: 900; }
+    .about-card h2 { font-size: 1.45rem; }
+    .about-card p { margin: 8px 0 0; color: var(--muted); }
+    .notice { margin-top: 14px; padding: 12px 14px; border: 1px solid var(--warning-line); border-radius: 12px; background: var(--warning-bg); color: #68562b; font-size: .88rem; }
+
+    .faq-list { border-top: 1px solid var(--line); }
+    details { padding: 16px 4px; border-bottom: 1px solid var(--line); }
+    summary { cursor: pointer; font-weight: 800; }
+    details p { margin: 9px 0 0; padding-inline-start: 2px; color: var(--muted); }
+
+    .contact-section { background: linear-gradient(180deg, #f5f8fc, #edf8f7); }
+    .contact-layout { display: grid; grid-template-columns: minmax(0, .78fr) minmax(0, 1.22fr); gap: 22px; align-items: start; }
+    .contact-intro, .contact-form-card { border: 1px solid var(--line); border-radius: var(--radius-lg); background: #fff; box-shadow: var(--shadow); }
+    .contact-intro { padding: clamp(22px, 3.6vw, 30px); }
+    .contact-intro p { color: var(--muted); }
+    .contact-intro .notice { margin-top: 20px; }
+    .contact-form-card { padding: clamp(20px, 3.7vw, 30px); }
+    .contact-form-card h3 { margin: 0 0 7px; font-size: 1.2rem; }
+    .form-intro { margin: 0 0 19px; color: var(--muted); font-size: .89rem; }
+    .form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 15px; }
+    .field { min-width: 0; }
+    .field-full { grid-column: 1 / -1; }
+    .field label { display: block; margin-bottom: 6px; font-weight: 800; font-size: .9rem; }
+    .required-mark { color: #a63a39; }
+    .field input, .field select, .field textarea { width: 100%; min-width: 0; min-height: 46px; padding: 10px 12px; border: 1px solid #cddfe9; border-radius: 11px; background: #fff; color: var(--ink); }
+    .field textarea { min-height: 94px; resize: vertical; }
+    .field input[aria-invalid="true"], .field select[aria-invalid="true"] { border-color: #b34343; box-shadow: 0 0 0 2px rgba(179,67,67,.09); }
+    .field-error { display: block; min-height: 0; margin-top: 4px; color: #a33434; font-size: .8rem; }
+    .field-error:empty { display: none; }
+    .form-actions { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 18px; }
+    .form-actions .btn { border: 0; }
+    .form-footnote { margin: 14px 0 0; color: var(--muted); font-size: .82rem; }
+    .form-status { margin: 12px 0 0; color: #9b3030; font-size: .9rem; }
+    .form-status:empty { display: none; }
+
+    footer { padding: 24px 0; color: #e8f2f7; background: var(--ink); }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    footer p { margin: 0; color: #d0e0ea; font-size: .86rem; }
+    .footer-brand { font-weight: 900; }
+
+    @media (max-width: 820px) {
+      .hero-grid { grid-template-columns: minmax(0, 1fr) minmax(250px, .85fr); gap: 22px; }
+      .course-tools { grid-template-columns: 1fr; }
+      .contact-layout { grid-template-columns: 1fr; }
+      .course-card { padding: 18px; }
+    }
+    @media (max-width: 640px) {
+      .wrap { width: min(100% - 28px, 1100px); }
+      .nav-layout { flex-direction: column; align-items: stretch; gap: 12px; }
+      .brand-stack { width: 100%; gap: 8px; }
+      .nav-links { width: 100%; gap: 8px 16px; font-size: .87rem; }
+      .header-search { flex: 0 1 auto; width: 100%; max-width: 360px; margin-top: 0; }
+      .hero { padding-block: 42px; }
+      .hero-grid, .course-grid { grid-template-columns: minmax(0, 1fr); }
+      .hero-panel { padding: 20px; }
+      .section-head { align-items: flex-start; flex-direction: column; gap: 8px; }
+      .course-tools { gap: 13px; }
+      .legacy-service { grid-template-columns: minmax(0, 1fr); align-items: stretch; }
+      .legacy-service .btn { width: 100%; }
+      .filter-buttons { gap: 6px; }
+      .filter-btn { flex: 0 0 auto; }
+      .about-card { grid-template-columns: 1fr; }
+      .form-grid { grid-template-columns: minmax(0, 1fr); }
+      .field-full { grid-column: auto; }
+      .form-actions .btn { width: 100%; }
+      .footer-inner { align-items: flex-start; flex-direction: column; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">رفتن به محتوای اصلی</a>
+  <header class="site-header">
+    <div class="wrap">
+      <nav class="nav" aria-label="ناوبری اصلی">
+        <div class="nav-layout">
+          <div class="brand-stack">
+            <a class="logo" href="#top" aria-label="کدنوا، صفحه اصلی"><span class="logo-mark" aria-hidden="true"><span class="logo-mark-symbol">✦</span></span><span>کدنوا</span></a>
+            <div class="nav-links">
+              <a href="#courses">خدمات</a>
+              <a href="#about">درباره ما</a>
+              <a href="#faq">پرسش‌ها</a>
+              <a href="#contact">تماس با ما</a>
+            </div>
+          </div>
+          <form class="header-search" id="header-search-form" role="search" aria-label="جستجوی دوره‌ها">
+            <label class="sr-only" for="header-search-input">جستجو کنید...</label>
+            <svg class="header-search-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+              <circle cx="10.8" cy="10.8" r="6.6" stroke="currentColor" stroke-width="1.8"></circle>
+              <path d="m15.7 15.7 4.2 4.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+            </svg>
+            <input class="header-search-input" id="header-search-input" type="search" placeholder="جستجو کنید..." autocomplete="off" aria-label="جستجو در دوره‌ها" aria-controls="course-grid">
+          </form>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <div class="hero" id="top">
+      <div class="wrap hero-grid">
+        <div>
+          <span class="eyebrow">یادگیری برنامه‌نویسی، قدم‌به‌قدم</span>
+          <h1>از علاقه‌مندی تا ساختن اولین پروژه</h1>
+          <p class="hero-copy">مسیر یادگیری مناسب خود را پیدا کنید؛ از مبانی پایتون و طراحی وب تا آشنایی با هوش مصنوعی. برای انتخاب بهتر هم می‌توانید درخواست مشاوره بفرستید.</p>
+          <div class="actions">
+            <a class="btn" href="#courses">مشاهده دوره‌ها <span aria-hidden="true">←</span></a>
+            <a class="btn btn-secondary" href="#contact">درخواست مشاوره</a>
+          </div>
+          <p class="sample-note">این وب‌سایت یک نمونه اولیه آموزشی است؛ جزئیات دوره‌ها در این نسخه نمونه هستند.</p>
+        </div>
+        <aside class="hero-panel" aria-label="مراحل پیشنهادی یادگیری">
+          <h2>مسیر یادگیری شما</h2>
+          <p class="panel-intro">از شناخت هدف تا شروع یک مسیر عملی</p>
+          <div class="path-step"><span class="step-number">۱</span><span><strong>تعریف هدف</strong><span>مشخص کنید چه چیزی می‌خواهید بسازید.</span></span></div>
+          <div class="path-step"><span class="step-number">۲</span><span><strong>تمرین هدفمند</strong><span>مفاهیم را با تمرین‌های مرحله‌ای یاد بگیرید.</span></span></div>
+          <div class="path-step"><span class="step-number">۳</span><span><strong>ساخت نمونه‌کار</strong><span>دانسته‌ها را در یک پروژه کوچک به‌کار ببرید.</span></span></div>
+        </aside>
+      </div>
+    </div>
+
+    <section id="courses" aria-labelledby="courses-title">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">مسیرهای آموزشی</p>
+            <h2 id="courses-title">دوره مناسب خود را پیدا کنید</h2>
+            <p class="section-desc">نام دوره را جستجو کنید یا با فیلتر دسته‌بندی، گزینه‌ها را محدود کنید. مدت‌زمان‌های درج‌شده نمونه‌اند و باید پیش از انتشار تأیید شوند.</p>
+          </div>
+        </div>
+
+        <div class="course-tools">
+          <div class="search-wrap">
+            <label for="course-search">جستجوی دوره‌ها</label>
+            <input class="search-input" type="search" id="course-search" placeholder="مثلاً Python یا طراحی وب" autocomplete="off" aria-controls="course-grid" aria-describedby="course-results">
+          </div>
+          <div class="filter-area">
+            <span class="filter-label" id="filter-label">دسته‌بندی</span>
+            <div class="filter-buttons" role="group" aria-labelledby="filter-label">
+              <button class="filter-btn" type="button" data-filter="all" aria-pressed="true">همه دوره‌ها</button>
+              <button class="filter-btn" type="button" data-filter="programming" aria-pressed="false">برنامه‌نویسی</button>
+              <button class="filter-btn" type="button" data-filter="web" aria-pressed="false">طراحی وب</button>
+              <button class="filter-btn" type="button" data-filter="ai" aria-pressed="false">هوش مصنوعی</button>
+            </div>
+          </div>
+        </div>
+
+        <p class="result-count" id="course-results" role="status" aria-live="polite">۳ دوره آموزشی</p>
+        <div class="course-grid" id="course-grid">
+          <article class="course-card" data-category="programming" data-search="python پایتون مبانی برنامه نویسی توابع تمرین کدنویسی">
+            <div class="course-top"><span class="course-symbol" aria-hidden="true">Py</span><span class="category-tag">برنامه‌نویسی</span></div>
+            <h3>Python | مبانی برنامه‌نویسی با پایتون</h3>
+            <p>آشنایی با ساختار زبان پایتون، متغیرها، شرط‌ها، حلقه‌ها و توابع برای شروع حل مسئله و ساخت تمرین‌های کاربردی.</p>
+            <div class="course-meta"><span class="duration">۸ هفته</span><span class="sample-duration">مدت نمونه</span></div>
+          </article>
+          <article class="course-card" data-category="web" data-search="طراحی وب html css javascript جاوااسکریپت صفحه سایت واکنش گرا">
+            <div class="course-top"><span class="course-symbol" aria-hidden="true">&lt;/&gt;</span><span class="category-tag">طراحی وب</span></div>
+            <h3>طراحی وب | HTML، CSS و JavaScript</h3>
+            <p>آشنایی با ساختار صفحه، استایل‌دهی و تعامل‌های پایه برای ساخت صفحات وب واکنش‌گرا و قابل استفاده.</p>
+            <div class="course-meta"><span class="duration">۱۰ هفته</span><span class="sample-duration">مدت نمونه</span></div>
+          </article>
+          <article class="course-card" data-category="ai" data-search="هوش مصنوعی artificial intelligence ai مفاهیم کاربردها داده یادگیری ماشین">
+            <div class="course-top"><span class="course-symbol" aria-hidden="true">AI</span><span class="category-tag">هوش مصنوعی</span></div>
+            <h3>هوش مصنوعی | مفاهیم و کاربردها</h3>
+            <p>آشنایی مقدماتی با مفهوم هوش مصنوعی، نمونه‌های کاربردی آن و اصطلاحات پایه برای درک بهتر این حوزه.</p>
+            <div class="course-meta"><span class="duration">۶ هفته</span><span class="sample-duration">مدت نمونه</span></div>
+          </article>
+        </div>
+        <div class="empty-state" id="no-courses" role="status" aria-live="polite" hidden>دوره‌ای با این عبارت یا دسته‌بندی پیدا نشد. عبارت دیگری را جستجو کنید یا فیلتر را تغییر دهید.</div>
+
+        <div class="legacy-service" aria-labelledby="legacy-service-title">
+          <div>
+            <p class="section-kicker">خدمت تکمیلی</p>
+            <h3 id="legacy-service-title">مشاوره پروژه</h3>
+            <p>تبدیل ایده اولیه به نیازمندی و نقشه راه توسعه.</p>
+          </div>
+          <a class="btn btn-secondary" href="#contact">درخواست مشاوره</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="about-section" id="about" aria-labelledby="about-title">
+      <div class="wrap">
+        <div class="about-card">
+          <div class="about-symbol" aria-hidden="true">✦</div>
+          <div>
+            <p class="section-kicker">درباره کدنوا</p>
+            <h2 id="about-title">یادگیری با تمرین و مسیر روشن</h2>
+            <p>کدنوا در این نمونه با هدف نمایش خدمات آموزش برنامه‌نویسی و راهنمایی در انتخاب مسیر یادگیری طراحی شده است. محتوای این صفحه نمایشی است و به کسب‌وکار یا مؤسسه واقعی متصل نیست.</p>
+            <div class="notice">اطلاعات مدت دوره‌ها و ایمیل موجود در این نسخه نمونه هستند. پیش از استفاده واقعی، جزئیات تأییدشده و راه ارتباطی رسمی را جایگزین کنید.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq" aria-labelledby="faq-title">
+      <div class="wrap">
+        <div class="section-head"><div><p class="section-kicker">پاسخ به پرسش‌ها</p><h2 id="faq-title">پرسش‌های متداول</h2></div></div>
+        <div class="faq-list">
+          <details>
+            <summary>آیا برای اجرای این سایت به سرور نیاز است؟</summary>
+            <p>خیر. این نسخه یک فایل HTML مستقل است و می‌توانید آن را مستقیماً با مرورگر باز کنید. قابلیت درخواست مشاوره فقط برنامه ایمیل را با یک پیش‌نویس آماده باز می‌کند.</p>
+          </details>
+          <details>
+            <summary>آیا مدت‌زمان‌های دوره‌ها قطعی هستند؟</summary>
+            <p>خیر. زمان‌های فعلی صرفاً داده نمونه برای نمایش طراحی هستند و باید با اطلاعات واقعی و تأییدشده جایگزین شوند.</p>
+          </details>
+          <details>
+            <summary>آیا این وب‌سایت خودش از هوش مصنوعی استفاده می‌کند؟</summary>
+            <p>خیر. این نمونه به مدل هوش مصنوعی، API، پایگاه داده یا سرویس خارجی متصل نیست.</p>
+          </details>
+          <details>
+            <summary>بعد از درخواست مشاوره چه اتفاقی می‌افتد؟</summary>
+            <p>برنامه ایمیل پیش‌فرض دستگاه با موضوع و متن آماده باز می‌شود. درخواست در سایت ذخیره نمی‌شود و ارسال نهایی فقط با بررسی و اقدام خود شما در برنامه ایمیل انجام خواهد شد.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact-section" id="contact" aria-labelledby="contact-title">
+      <div class="wrap">
+        <div class="section-head">
+          <div><p class="section-kicker">شروع یک گفت‌وگو</p><h2 id="contact-title">درخواست مشاوره آموزشی</h2><p class="section-desc">اطلاعات زیر را وارد کنید تا پیش‌نویس ایمیل متناسب با دوره انتخابی آماده شود.</p></div>
+        </div>
+        <div class="contact-layout">
+          <aside class="contact-intro">
+            <h3>برای انتخاب مسیر بهتر</h3>
+            <p>نام و راه ارتباطی خود را وارد کنید و موضوع موردنظرتان را مشخص سازید. اطلاعات واردشده فقط در متن ایمیل آماده‌شده استفاده می‌شود.</p>
+            <div class="notice"><strong>گیرنده فعلی آزمایشی است:</strong> <span dir="ltr">hello@example.com</span><br>این آدرس متعلق به مؤسسه نیست. پیش از استفاده واقعی، ثابت <code>CONTACT_EMAIL</code> را در کد با ایمیل رسمی جایگزین کنید.</div>
+            <p class="sample-note">این فرم به سرور متصل نیست؛ اطلاعات در سایت ثبت یا ذخیره نمی‌شوند.</p>
+          </aside>
+
+          <div class="contact-form-card">
+            <h3>فرم تماس</h3>
+            <p class="form-intro">موارد دارای علامت <span class="required-mark" aria-hidden="true">*</span> ضروری هستند.</p>
+            <form id="consultation-form" novalidate>
+              <div class="form-grid">
+                <div class="field">
+                  <label for="full-name">نام و نام خانوادگی <span class="required-mark" aria-hidden="true">*</span></label>
+                  <input id="full-name" name="fullName" type="text" autocomplete="name" required minlength="2" aria-describedby="name-error">
+                  <span class="field-error" id="name-error"></span>
+                </div>
+                <div class="field">
+                  <label for="contact-way">راه ارتباطی (ایمیل یا تلفن) <span class="required-mark" aria-hidden="true">*</span></label>
+                  <input id="contact-way" name="contactWay" type="text" autocomplete="email" required placeholder="ایمیل یا شماره تماس" aria-describedby="contact-error">
+                  <span class="field-error" id="contact-error"></span>
+                </div>
+                <div class="field field-full">
+                  <label for="selected-course">دوره موردنظر <span class="required-mark" aria-hidden="true">*</span></label>
+                  <select id="selected-course" name="course" required aria-describedby="course-error">
+                    <option value="" selected disabled>یک گزینه انتخاب کنید</option>
+                    <option value="Python | مبانی برنامه‌نویسی با پایتون">Python | مبانی برنامه‌نویسی با پایتون</option>
+                    <option value="طراحی وب | HTML، CSS و JavaScript">طراحی وب | HTML، CSS و JavaScript</option>
+                    <option value="هوش مصنوعی | مفاهیم و کاربردها">هوش مصنوعی | مفاهیم و کاربردها</option>
+                    <option value="هنوز مطمئن نیستم؛ راهنمایی برای انتخاب دوره">هنوز مطمئن نیستم؛ راهنمایی برای انتخاب دوره</option>
+                  </select>
+                  <span class="field-error" id="course-error"></span>
+                </div>
+                <div class="field field-full">
+                  <label for="message-note">توضیحات تکمیلی (اختیاری)</label>
+                  <textarea id="message-note" name="messageNote" rows="3" placeholder="هدفتان از یادگیری یا پرسش خود را بنویسید."></textarea>
+                </div>
+              </div>
+              <div class="form-actions">
+                <button class="btn" type="submit">آماده‌کردن ایمیل درخواست مشاوره <span aria-hidden="true">←</span></button>
+              </div>
+              <p class="form-footnote">پس از کلیک، برنامه ایمیل پیش‌فرض باید باز شود. متن را بازبینی و برای ارسال نهایی خودتان دکمه ارسال را بزنید. اگر برنامه ایمیل باز نشد، تنظیمات برنامه پیش‌فرض دستگاه را بررسی کنید.</p>
+              <p class="form-status" id="form-status" role="alert" aria-live="assertive"></p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer-inner">
+      <span class="footer-brand">✦ کدنوا</span>
+      <p>نمونه اولیه آموزشی • تک‌فایل HTML • بدون کتابخانه خارجی و قابل اجرا به‌صورت آفلاین</p>
+    </div>
+  </footer>
+
+  <script>
+    'use strict';
+
+    // جست‌وجوی مقاوم‌تر برای فارسی: یکسان‌سازی حروف عربی/فارسی، نیم‌فاصله، اعراب و اعداد.
+    const searchInput = document.getElementById('course-search');
+    const courseCards = Array.from(document.querySelectorAll('.course-card'));
+    const filterButtons = Array.from(document.querySelectorAll('.filter-btn'));
+    const resultCount = document.getElementById('course-results');
+    const emptyState = document.getElementById('no-courses');
+    const headerSearchForm = document.getElementById('header-search-form');
+    const headerSearchInput = document.getElementById('header-search-input');
+    let activeCategory = 'all';
+
+    function normalizeSearch(value) {
+      return String(value ?? '')
+        .normalize('NFKC')
+        .toLocaleLowerCase('fa')
+        .replace(/[يى]/g, 'ی')
+        .replace(/ك/g, 'ک')
+        .replace(/[ۀة]/g, 'ه')
+        .replace(/[ً-ٰٟۖ-ۭ]/g, '')
+        .replace(/ـ/g, '')
+        .replace(/[​-‏‪-‮]/g, ' ')
+        .replace(/[۰-۹]/g, (digit) => String(digit.charCodeAt(0) - 0x06F0))
+        .replace(/[٠-٩]/g, (digit) => String(digit.charCodeAt(0) - 0x0660))
+        .replace(/[\s\u00A0]+/g, ' ')
+        .trim();
+    }
+
+    function updateCourses() {
+      const query = normalizeSearch(searchInput.value);
+      let visibleCount = 0;
+
+      courseCards.forEach((card) => {
+        const searchableText = normalizeSearch(`${card.textContent} ${card.dataset.search || ''}`);
+        const matchesText = !query || searchableText.includes(query);
+        const matchesCategory = activeCategory === 'all' || card.dataset.category === activeCategory;
+        const isVisible = matchesText && matchesCategory;
+        card.hidden = !isVisible;
+        if (isVisible) visibleCount += 1;
+      });
+
+      resultCount.textContent = visibleCount === 0
+        ? 'هیچ دوره‌ای با این عبارت و دسته‌بندی پیدا نشد.'
+        : `${new Intl.NumberFormat('fa-IR').format(visibleCount)} دوره نمایش داده می‌شود.`;
+      emptyState.hidden = visibleCount !== 0;
+    }
+
+    searchInput.addEventListener('input', () => {
+      if (headerSearchInput.value !== searchInput.value) headerSearchInput.value = searchInput.value;
+      updateCourses();
+    });
+
+    headerSearchInput.addEventListener('input', () => {
+      if (searchInput.value !== headerSearchInput.value) searchInput.value = headerSearchInput.value;
+      updateCourses();
+    });
+
+    headerSearchForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      searchInput.value = headerSearchInput.value;
+      updateCourses();
+      document.getElementById('courses').scrollIntoView({
+        behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+        block: 'start'
+      });
+      searchInput.focus({ preventScroll: true });
+    });
+
+    filterButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        activeCategory = button.dataset.filter;
+        filterButtons.forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
+        updateCourses();
+      });
+    });
+    updateCourses();
+
+    // آدرس فعلی عمداً آزمایشی است؛ پیش از انتشار، آن را با ایمیل رسمی جایگزین کنید.
+    const CONTACT_EMAIL = 'hello@example.com'; // آزمایشی؛ ایمیل واقعی مؤسسه نیست.
+    const consultationForm = document.getElementById('consultation-form');
+    const formStatus = document.getElementById('form-status');
+    const nameInput = document.getElementById('full-name');
+    const contactInput = document.getElementById('contact-way');
+    const courseInput = document.getElementById('selected-course');
+    const noteInput = document.getElementById('message-note');
+    const validationFields = [
+      { input: nameInput, error: document.getElementById('name-error'), message: 'لطفاً نام خود را با دست‌کم دو نویسه وارد کنید.', valid: (value) => value.trim().length >= 2 },
+      { input: contactInput, error: document.getElementById('contact-error'), message: 'لطفاً یک راه ارتباطی وارد کنید.', valid: (value) => value.trim().length >= 5 },
+      { input: courseInput, error: document.getElementById('course-error'), message: 'لطفاً دوره موردنظر را انتخاب کنید.', valid: (value) => value.trim().length > 0 }
+    ];
+
+    validationFields.forEach(({ input, error }) => {
+      input.addEventListener('input', () => {
+        input.removeAttribute('aria-invalid');
+        error.textContent = '';
+        formStatus.textContent = '';
+      });
+      input.addEventListener('change', () => {
+        input.removeAttribute('aria-invalid');
+        error.textContent = '';
+        formStatus.textContent = '';
+      });
+    });
+
+    consultationForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      formStatus.textContent = '';
+      let firstInvalid = null;
+
+      validationFields.forEach(({ input, error, message, valid }) => {
+        const value = input.value;
+        const isValid = valid(value);
+        input.setAttribute('aria-invalid', String(!isValid));
+        error.textContent = isValid ? '' : message;
+        if (!isValid && !firstInvalid) firstInvalid = input;
+      });
+
+      if (firstInvalid) {
+        formStatus.textContent = 'لطفاً فیلدهای مشخص‌شده را اصلاح کنید.';
+        firstInvalid.focus();
+        return;
+      }
+
+      const course = courseInput.value;
+      const subject = `درخواست مشاوره کدنوا | ${course}`;
+      const body = [
+        'سلام،',
+        '',
+        'برای دریافت مشاوره آموزشی درخواست دارم.',
+        '',
+        `نام و نام خانوادگی: ${nameInput.value.trim()}`,
+        `راه ارتباطی: ${contactInput.value.trim()}`,
+        `دوره موردنظر: ${course}`,
+        `توضیحات تکمیلی: ${noteInput.value.trim() || 'ذکر نشده است'}`,
+        '',
+        'این پیام از طریق فرم نمونه کدنوا آماده شده است.'
+      ].join('\n');
+      const mailtoUrl = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+      // هیچ چیزی در سایت ذخیره یا ارسال نمی‌شود؛ کاربر باید ایمیل را بررسی و دستی ارسال کند.
+      window.location.href = mailtoUrl;
+    });
+  </script>
+</body>
+</html>
